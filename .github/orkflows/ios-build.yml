@@ -1,0 +1,37 @@
+name: iOS Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install Kivy
+      run: |
+        pip install kivy
+        pip install kivy-ios
+
+    - name: Build Kivy app
+      run: |
+        mkdir ios
+        cd ios
+        kivy-ios create myapp
+        cd myapp
+        toolchain build kivy
+        toolchain create myapp ../main.py
+        toolchain build myapp
+
+    - name: Archive and Upload Build
+      # Add steps to archive the build and upload to a suitable service
