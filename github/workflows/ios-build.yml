@@ -30,11 +30,11 @@ jobs:
         kivy-ios create myapp
         cd myapp
         toolchain build kivy
-        toolchain create myapp ../main.py
+        toolchain create myapp ../asd.py
         toolchain build myapp
 
     - name: Archive Build
       uses: actions/upload-artifact@v2
       with:
         name: ios-build
-        path: path/to/your/build/output
+        path: ios/myapp/build/Release-iphoneos/myapp.app
