@@ -10,31 +10,31 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
 
-    - name: Install Kivy
-      run: |
-        pip install kivy
-        pip install kivy-ios
+      - name: Install Kivy
+        run: |
+          pip install kivy
+          pip install kivy-ios
 
-    - name: Build Kivy app
-      run: |
-        mkdir ios
-        cd ios
-        kivy-ios create myapp
-        cd myapp
-        toolchain build kivy
-        toolchain create myapp ../asd.py
-        toolchain build myapp
+      - name: Build Kivy app
+        run: |
+          mkdir ios
+          cd ios
+          kivy-ios create myapp
+          cd myapp
+          cp ../../asd.py .
+          toolchain create myapp ../asd.py
+          toolchain build myapp
 
-    - name: Archive Build
-      uses: actions/upload-artifact@v2
-      with:
-        name: ios-build
-        path: ios/myapp/build/Release-iphoneos/myapp.app
+      - name: Archive Build
+        uses: actions/upload-artifact@v2
+        with:
+          name: ios-build
+          path: ios/myapp/build/Release-iphoneos/myapp.app
